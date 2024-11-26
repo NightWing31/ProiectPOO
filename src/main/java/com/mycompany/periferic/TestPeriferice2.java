@@ -133,7 +133,7 @@ public class TestPeriferice2 {
             }
         }
 **/
-         // Metoda parcurgere Microfoane cu for-each
+         // Metoda parcurgere Microfoane cu for clasic
         System.out.println();
         System.out.println("\nIntroduceti sistemul de operare pentru mouse-uri (ex: Windows, MacOS):");
         String sistemOperareMouse = scanner.nextLine();
