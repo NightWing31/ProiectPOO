@@ -64,5 +64,9 @@ class Microfon extends Periferice {
         return compatibilitateSO.contains(sistemOperare);
     }
 
+    public boolean isConferinta() {
+        return this.esteConferinta;
+    }
+
 
 }

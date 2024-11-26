@@ -58,7 +58,7 @@ class Tastatura extends Periferice {
     public String obtineDetalii() {
         return super.toString() + ", Layout: " + tipLayout + ", Iluminare: " + iluminare + ", Conectivitate: " + conectivitate;
     }
-
+            
     @Override
     public boolean verificaCompatibilitate(String sistemOperare) {
         return compatibilitateSO.contains(sistemOperare);

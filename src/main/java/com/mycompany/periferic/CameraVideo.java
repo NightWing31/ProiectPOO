@@ -64,4 +64,8 @@ class CameraVideo extends Periferice {
         return compatibilitateSO.contains(sistemOperare);
     }
 
+    public boolean haveMicrofonn() {
+        return this.areMicrofon;
+}
+
 }   

@@ -63,5 +63,5 @@ class Mouse extends Periferice {
     public boolean verificaCompatibilitate(String sistemOperare) {
         return compatibilitateSO.contains(sistemOperare);
     }
-  
+
 }
