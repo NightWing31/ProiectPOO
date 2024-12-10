@@ -1,6 +1,12 @@
 package com.mycompany.periferic;
 
+import java.util.ArrayList;
+
 class CameraVideo extends Periferice {
+
+    static ArrayList<CameraVideo> citesteDinFisier(String cameretxt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     private int rezolutie;
     private int rataCadre;
     private boolean areMicrofon;
@@ -67,5 +73,9 @@ class CameraVideo extends Periferice {
     public boolean haveMicrofonn() {
         return this.areMicrofon;
 }
+
+    void scrieInFisier(String cameretxt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }   

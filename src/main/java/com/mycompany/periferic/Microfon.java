@@ -1,6 +1,12 @@
 package com.mycompany.periferic;
 
+import java.util.ArrayList;
+
 class Microfon extends Periferice {
+
+    static ArrayList<Microfon> citesteDinFisier(String microfoanetxt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     private int sensibilitate;
     private String tipConectare;
     private boolean esteConferinta;
@@ -66,6 +72,10 @@ class Microfon extends Periferice {
 
     public boolean isConferinta() {
         return this.esteConferinta;
+    }
+
+    void scrieInFisier(String microfoanetxt) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 

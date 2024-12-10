@@ -31,13 +31,13 @@ public class TestPeriferice2 {
 
         // Crearea listei de mouse-uri
         ArrayList<Mouse> mouseuri = new ArrayList<>();
-        Mouse mouse1 = new Mouse("Logitech", "MX Master 3", 499.99, "Windows, MacOS", 4000, 7, true);
+        Mouse mouse1 = new Mouse("Logitech", "MX Master 3", 499.99, "Windows, MacOS, Linux", 4000, 7, true);
         Mouse mouse2 = new Mouse("Razer", "Viper Ultimate", 799.99, "Windows, MacOS", 20000, 6, true);
         Mouse mouse3 = new Mouse("SteelSeries", "Rival 3", 249.99, "Windows", 8500, 6, false);
         Mouse mouse4 = new Mouse("HP", "Z5000", 149.99, "Windows", 1200, 3, true);
         Mouse mouse5 = new Mouse("Microsoft", "Classic IntelliMouse", 199.99, "Windows", 3200, 5, false);
         Mouse mouse6 = new Mouse("Apple", "Magic Mouse 2", 399.99, "MacOS", 800, 2, true);
-        Mouse mouse7 = new Mouse("Corsair", "Dark Core RGB", 599.99, "Windows", 16000, 8, true);
+        Mouse mouse7 = new Mouse("Corsair", "Dark Core RGB", 599.99, "Windows, Linux", 16000, 8, true);
         Mouse mouse8 = new Mouse("Logitech", "G502 HERO", 399.99, "Windows, Linux", 16000, 11, false);
         Mouse mouse9 = new Mouse("HyperX", "Pulsefire FPS Pro", 349.99, "Windows, MacOS", 16000, 6, false);
         Mouse mouse10 = new Mouse("Dell", "MS116", 49.99, "Windows", 1000, 2, false);
@@ -60,11 +60,11 @@ public class TestPeriferice2 {
         CameraVideo camera3 = new CameraVideo("Microsoft", "LifeCam Studio", 249.99, "Windows", 1080, 30, true);
         CameraVideo camera4 = new CameraVideo("Dell", "UltraSharp", 699.99, "Windows, MacOS", 2160, 30, true);
         CameraVideo camera5 = new CameraVideo("HP", "Pro Webcam", 349.99, "Windows", 720, 30, false);
-        CameraVideo camera6 = new CameraVideo("Logitech", "Brio 4K", 999.99, "Windows, MacOS", 2160, 60, true);
+        CameraVideo camera6 = new CameraVideo("Logitech", "Brio 4K", 999.99, "Windows, Linux, MacOS", 2160, 60, true);
         CameraVideo camera7 = new CameraVideo("AverMedia", "PW315", 799.99, "Windows", 1080, 60, true);
         CameraVideo camera8 = new CameraVideo("Lenovo", "500 FHD", 299.99, "Windows", 1080, 30, false);
         CameraVideo camera9 = new CameraVideo("Creative", "Live! Cam", 249.99, "Windows", 720, 30, true);
-        CameraVideo camera10 = new CameraVideo("Trust", "Spotlight Pro", 149.99, "Windows", 720, 30, false);
+        CameraVideo camera10 = new CameraVideo("Trust", "Spotlight Pro", 149.99, "Windows, Linux", 720, 30, false);
 
         camere.add(camera1);
         camere.add(camera2);
@@ -82,11 +82,11 @@ public class TestPeriferice2 {
         Microfon microfon1 = new Microfon("Blue", "Yeti", 599.99, "Windows, MacOS", -38, "USB", true);
         Microfon microfon2 = new Microfon("Rode", "NT-USB Mini", 449.99, "Windows, MacOS", -45, "USB", false);
         Microfon microfon3 = new Microfon("Shure", "MV5", 799.99, "Windows, MacOS", -40, "USB", true);
-        Microfon microfon4 = new Microfon("Samson", "Meteor", 299.99, "Windows", -42, "USB", false);
+        Microfon microfon4 = new Microfon("Samson", "Meteor", 299.99, "Windows, Linux", -42, "USB", false);
         Microfon microfon5 = new Microfon("Trust", "GXT 232", 199.99, "Windows", -38, "USB", true);
         Microfon microfon6 = new Microfon("HyperX", "QuadCast", 699.99, "Windows", -40, "USB", true);
         Microfon microfon7 = new Microfon("Razer", "Seiren X", 599.99, "Windows, MacOS", -38, "USB", false);
-        Microfon microfon8 = new Microfon("Logitech", "Blue Snowball", 399.99, "Windows", -38, "USB", true);
+        Microfon microfon8 = new Microfon("Logitech", "Blue Snowball", 399.99, "Windows, Linux", -38, "USB", true);
         Microfon microfon9 = new Microfon("AKG", "Lyra", 499.99, "Windows, MacOS", -45, "USB", false);
         Microfon microfon10 = new Microfon("Audio-Technica", "AT2020", 899.99, "Windows", -36, "XLR", true);
 
@@ -102,10 +102,12 @@ public class TestPeriferice2 {
         microfoane.add(microfon10);
 
         Scanner scanner = new Scanner(System.in);
+        
+        System.out.println(microfoane.get(2));
 
         // Filtrarea tastaturilor
         System.out.println("\n");
-        System.out.println("Introduceti sistemul de operare pentru tastaturi (ex: Windows, MacOS):");
+        System.out.println("Introduceti sistemul de operare pentru tastaturi (ex: Windows, Linux, MacOS):");
         String sistemOperareTastaturi = scanner.nextLine();
         System.out.println("Doriti tastaturi cu iluminare? (true/false):");
         boolean iluminareTastaturi = scanner.nextBoolean();
@@ -135,7 +137,7 @@ public class TestPeriferice2 {
 **/
          // Metoda parcurgere Microfoane cu for-each
         System.out.println();
-        System.out.println("\nIntroduceti sistemul de operare pentru mouse-uri (ex: Windows, MacOS):");
+        System.out.println("\nIntroduceti sistemul de operare pentru mouse-uri (ex: Windows, Linux, MacOS):");
         String sistemOperareMouse = scanner.nextLine();
         
         System.out.println("Doriti mouse-uri cu wireless? (true/false):");
@@ -154,7 +156,7 @@ public class TestPeriferice2 {
 
         // Filtrarea camerelor video
         System.out.println("\n");
-        System.out.println("Introduceti sistemul de operare pentru camere video (ex: Windows, MacOS):");
+        System.out.println("Introduceti sistemul de operare pentru camere video (ex: Windows, Linux, MacOS):");
         String sistemOperareCamere = scanner.nextLine();
         System.out.println("Doriti camere cu microfon? (true/false):");
         boolean microfonCamere = scanner.nextBoolean();
@@ -183,7 +185,7 @@ public class TestPeriferice2 {
 **/
             // Metoda parcurgere Microfoane cu for-each
         System.out.println();
-        System.out.println("\nIntroduceti sistemul de operare pentru microfoane (ex: Windows, MacOS):");
+        System.out.println("\nIntroduceti sistemul de operare pentru microfoane (ex: Windows, Linux, MacOS):");
         String sistemOperareMicrofoane = scanner.nextLine();
 
         System.out.println("Doriti Microfoane conferinta? (true/false):");
