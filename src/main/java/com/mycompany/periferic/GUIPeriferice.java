@@ -1,165 +1,69 @@
 package com.mycompany.periferic;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
-public class GUIPeriferice extends JFrame {
+public class GUIPeriferice extends javax.swing.JFrame {
 
-    private final JComboBox<String> comboBoxPeriferice;
-    private final JTextField textCriteriu;
-    private final JCheckBox checkBoxConditie;
-    private final JLabel labelConditie;
-    private final JTextArea textAreaRezultate;
-
-    private ArrayList<Tastatura> tastaturi;
-    private ArrayList<Mouse> mouseuri;
-    private ArrayList<CameraVideo> camere;
-    private ArrayList<Microfon> microfoane;
+    private final List<Tastatura> tastaturi;
+    private final List<Mouse> mouseuri;
+    private final List<Microfon> microfoane;
+    private final List<CameraVideo> camere;
 
     public GUIPeriferice() {
-        setTitle("Filtrare Periferice");
-        setSize(800, 800);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(new BorderLayout());
+        initComponents();
 
-        initData();
+        tastaturi = new ArrayList<>();
+        tastaturi.add(new Tastatura("Logitech", "G915", 799.99, "Windows, MacOS", "QWERTY", true, "Bluetooth"));
+        tastaturi.add(new Tastatura("Razer", "BlackWidow", 699.99, "Windows", "QWERTY", true, "USB"));
+        tastaturi.add(new Tastatura("Corsair", "K70", 599.99, "Windows, MacOS", "AZERTY", true, "USB"));
+        tastaturi.add(new Tastatura("HP", "Omen", 299.99, "Windows", "QWERTZ", false, "USB"));
+        tastaturi.add(new Tastatura("Dell", "KB216", 79.99, "Windows", "QWERTY", false, "USB"));
+        tastaturi.add(new Tastatura("Microsoft", "Ergonomic", 199.99, "Windows", "QWERTY", false, "Wireless"));
+        tastaturi.add(new Tastatura("HyperX", "Alloy FPS", 449.99, "Windows, Linux", "QWERTY", true, "USB"));
+        tastaturi.add(new Tastatura("Lenovo", "ThinkPad", 199.99, "Windows", "QWERTY", false, "USB"));
 
-        // Panoul de sus
-        JPanel panelSus = new JPanel();
-        panelSus.add(new JLabel("Tip periferic:"));
-        comboBoxPeriferice = new JComboBox<>(new String[]{"Tastatura", "Mouse", "Camera Video", "Microfon"});
-        comboBoxPeriferice.addActionListener(e -> actualizeazaLabelConditie());
-        panelSus.add(comboBoxPeriferice);
+        mouseuri = new ArrayList<>();
+        mouseuri.add(new Mouse("Logitech", "MX Master 3", 499.99, "Windows, MacOS", 4000, 7, true));
+        mouseuri.add(new Mouse("Razer", "Viper Ultimate", 799.99, "Windows, MacOS", 20000, 6, true));
+        mouseuri.add(new Mouse("SteelSeries", "Rival 3", 249.99, "Windows", 8500, 6, false));
+        mouseuri.add(new Mouse("HP", "Z5000", 149.99, "Windows", 1200, 3, true));
+        mouseuri.add(new Mouse("Microsoft", "Classic IntelliMouse", 199.99, "Windows", 3200, 5, false));
+        mouseuri.add(new Mouse("Apple", "Magic Mouse 2", 399.99, "MacOS", 800, 2, true));
+        mouseuri.add(new Mouse("Corsair", "Dark Core RGB", 599.99, "Windows", 16000, 8, true));
+        mouseuri.add(new Mouse("Logitech", "G502 HERO", 399.99, "Windows, Linux", 16000, 11, false));
+        mouseuri.add(new Mouse("HyperX", "Pulsefire FPS Pro", 349.99, "Windows, MacOS", 16000, 6, false));
 
-        // Panoul de mijloc
-        JPanel panelMijloc = new JPanel(new GridLayout(2, 3));
-        panelMijloc.add(new JLabel("Sistem de operare compatibil: (ex: Windows, Linux, MacOS):"));
-        textCriteriu = new JTextField();
-        panelMijloc.add(textCriteriu);
+        mouseuri.add(new Mouse("Dell", "MS116", 49.99, "Windows", 1000, 2, false));
+        microfoane = new ArrayList<>();
+        microfoane.add(new Microfon("Blue", "Yeti", 599.99, "Windows, MacOS", -38, "USB", true));
+        microfoane.add(new Microfon("Rode", "NT-USB Mini", 449.99, "Windows, MacOS", -45, "USB", false));
+        microfoane.add(new Microfon("Shure", "MV5", 799.99, "Windows, MacOS", -40, "USB", true));
+        microfoane.add(new Microfon("Samson", "Meteor", 299.99, "Windows", -42, "USB", false));
+        microfoane.add(new Microfon("Trust", "GXT 232", 199.99, "Windows", -38, "USB", true));
+        microfoane.add(new Microfon("HyperX", "QuadCast", 699.99, "Windows", -40, "USB", true));
+        microfoane.add(new Microfon("Razer", "Seiren X", 599.99, "Windows, MacOS", -38, "USB", false));
+        microfoane.add(new Microfon("Logitech", "Blue Snowball", 399.99, "Windows", -38, "USB", true));
+        microfoane.add(new Microfon("AKG", "Lyra", 499.99, "Windows, MacOS", -45, "USB", false));
+        microfoane.add(new Microfon("Audio-Technica", "AT2020", 899.99, "Windows", -36, "XLR", true));
 
-        labelConditie = new JLabel("Conditie suplimentară pentru fiecare categorie: ");
-        panelMijloc.add(labelConditie);
-
-        checkBoxConditie = new JCheckBox("Activat");
-        panelMijloc.add(checkBoxConditie);
-
-        // Panoul de jos
-        JPanel panelJos = new JPanel(new BorderLayout());
-        textAreaRezultate = new JTextArea(5,5);
-        textAreaRezultate.setEditable(false);
-        panelJos.add(new JScrollPane(textAreaRezultate), BorderLayout.CENTER);
-
-        JButton butonAfisare = new JButton("Afiseaza");
-        butonAfisare.addActionListener(e -> afiseazaRezultate());
-        panelJos.add(butonAfisare, BorderLayout.SOUTH);
-
-        // Adăugare panouri
-        add(panelSus, BorderLayout.NORTH);
-        add(panelMijloc, BorderLayout.CENTER);
-        add(panelJos, BorderLayout.SOUTH);
-    }
-
-    private void initData() {
-    tastaturi = new ArrayList<>();
-    tastaturi.add(new Tastatura("Logitech", "G915", 799.99, "Windows, MacOS, Linux", "QWERTY", true, "Bluetooth"));
-    tastaturi.add(new Tastatura("Razer", "BlackWidow", 699.99, "Windows, Linux", "QWERTY", true, "USB"));
-    tastaturi.add(new Tastatura("Corsair", "K70 RGB", 599.99, "Windows, MacOS", "QWERTY", true, "USB"));
-    tastaturi.add(new Tastatura("HyperX", "Alloy FPS", 499.99, "Windows, Linux", "QWERTY", false, "USB"));
-    tastaturi.add(new Tastatura("SteelSeries", "Apex Pro", 849.99, "Windows, MacOS", "QWERTY", true, "Bluetooth"));
-    tastaturi.add(new Tastatura("Logitech", "K380", 299.99, "Windows, MacOS, Linux", "QWERTY", false, "Bluetooth"));
-    tastaturi.add(new Tastatura("Microsoft", "Sculpt Ergonomic", 399.99, "Windows", "QWERTY", false, "USB"));
-    tastaturi.add(new Tastatura("Roccat", "Vulcan 120", 749.99, "Windows", "QWERTY", true, "USB"));
-    tastaturi.add(new Tastatura("Ducky", "One 2 Mini", 499.99, "Windows, Linux", "QWERTY", false, "USB"));
-    tastaturi.add(new Tastatura("Anne Pro", "2", 429.99, "Windows, MacOS, Linux", "QWERTY", true, "Bluetooth"));
-
-    mouseuri = new ArrayList<>();
-    mouseuri.add(new Mouse("Logitech", "MX Master 3", 499.99, "Windows, MacOS, Linux", 4000, 7, true));
-    mouseuri.add(new Mouse("Razer", "Viper Ultimate", 799.99, "Windows, MacOS, Linux", 20000, 6, true));
-    mouseuri.add(new Mouse("SteelSeries", "Rival 600", 599.99, "Windows, MacOS", 12000, 8, false));
-    mouseuri.add(new Mouse("Corsair", "Dark Core RGB", 699.99, "Windows, MacOS, Linux", 18000, 8, true));
-    mouseuri.add(new Mouse("Logitech", "G502", 399.99, "Windows, Linux", 16000, 11, false));
-    mouseuri.add(new Mouse("HyperX", "Pulsefire FPS Pro", 349.99, "Windows, MacOS", 16000, 6, false));
-    mouseuri.add(new Mouse("Roccat", "Kone AIMO", 499.99, "Windows", 16000, 10, true));
-    mouseuri.add(new Mouse("Microsoft", "Arc Mouse", 299.99, "Windows, Linux", 1000, 2, true));
-    mouseuri.add(new Mouse("Razer", "Basilisk X", 399.99, "Windows, MacOS", 16000, 6, true));
-    mouseuri.add(new Mouse("Logitech", "M330 Silent", 199.99, "Windows, MacOS, Linux", 1000, 3, false));
-
-    camere = new ArrayList<>();
-    camere.add(new CameraVideo("Logitech", "C920", 399.99, "Windows, MacOS, Linux", 1080, 30, true));
-    camere.add(new CameraVideo("Razer", "Kiyo", 599.99, "Windows", 1080, 60, true));
-    camere.add(new CameraVideo("Microsoft", "LifeCam HD-3000", 249.99, "Windows, Linux", 720, 30, false));
-    camere.add(new CameraVideo("Logitech", "Brio", 899.99, "Windows, MacOS", 2160, 30, true));
-    camere.add(new CameraVideo("AverMedia", "PW513", 849.99, "Windows, MacOS", 2160, 60, false));
-    camere.add(new CameraVideo("Razer", "Kiyo Pro", 999.99, "Windows, Linux", 1080, 60, true));
-    camere.add(new CameraVideo("Logitech", "StreamCam", 749.99, "Windows, MacOS", 1080, 60, true));
-    camere.add(new CameraVideo("Elgato", "Facecam", 999.99, "Windows", 1080, 60, false));
-    camere.add(new CameraVideo("Microsoft", "LifeCam Studio", 499.99, "Windows, Linux", 1080, 30, false));
-    camere.add(new CameraVideo("Aukey", "PC-LM1E", 299.99, "Windows, MacOS", 1080, 30, false));
-
-    microfoane = new ArrayList<>();
-    microfoane.add(new Microfon("Blue", "Yeti", 599.99, "Windows, MacOS, Linux", -38, "USB", true));
-    microfoane.add(new Microfon("Rode", "NT-USB Mini", 449.99, "Windows, MacOS", -45, "USB", false));
-    microfoane.add(new Microfon("Shure", "MV7", 999.99, "Windows, MacOS, Linux", -38, "USB", true));
-    microfoane.add(new Microfon("HyperX", "QuadCast", 749.99, "Windows, MacOS", -36, "USB", true));
-    microfoane.add(new Microfon("Elgato", "Wave 3", 899.99, "Windows, Linux", -35, "USB", true));
-    microfoane.add(new Microfon("Samson", "G-Track Pro", 649.99, "Windows, MacOS", -39, "USB", true));
-    microfoane.add(new Microfon("Blue", "Snowball", 349.99, "Windows, MacOS", -40, "USB", false));
-    microfoane.add(new Microfon("Audio-Technica", "AT2020USB+", 799.99, "Windows, MacOS, Linux", -37, "USB", false));
-    microfoane.add(new Microfon("Razer", "Seiren X", 549.99, "Windows, MacOS", -40, "USB", true));
-    microfoane.add(new Microfon("Fifine", "K669B", 199.99, "Windows, MacOS, Linux", -38, "USB", false));
-}
-
-
-    private void actualizeazaLabelConditie() {
-        String tipPeriferic = (String) comboBoxPeriferice.getSelectedItem();
-        switch (tipPeriferic) {
-            case "Tastatura" -> labelConditie.setText("Condiție suplimentară (Iluminare):");
-            case "Mouse" -> labelConditie.setText("Condiție suplimentară (Wireless):");
-            case "Camera Video" -> labelConditie.setText("Condiție suplimentară (Microfon integrat):");
-            case "Microfon" -> labelConditie.setText("Condiție suplimentară (Conferință):");
-        }
-    }
-
-    private void afiseazaRezultate() {
-        String tipPeriferic = (String) comboBoxPeriferice.getSelectedItem();
-        String criteriu = textCriteriu.getText();
-        boolean conditie = checkBoxConditie.isSelected();
-
-        textAreaRezultate.setText("");
-
-        switch (tipPeriferic) {
-            case "Tastatura" -> {
-                for (Tastatura t : tastaturi) {
-                    if (t.getCompatibilitateSO().contains(criteriu) && t.isIluminare() == conditie) {
-                        textAreaRezultate.append(t.obtineDetalii() + "\n");
-                    }
-                }
-            }
-            case "Mouse" -> {
-                for (Mouse m : mouseuri) {
-                    if (m.getCompatibilitateSO().contains(criteriu) && m.isWireless() == conditie) {
-                        textAreaRezultate.append(m.obtineDetalii() + "\n");
-                    }
-                }
-            }
-            case "Camera Video" -> {
-                for (CameraVideo c : camere) {
-                    if (c.getCompatibilitateSO().contains(criteriu) && c.haveMicrofonn() == conditie) {
-                        textAreaRezultate.append(c.obtineDetalii() + "\n");
-                    }
-                }
-            }
-            case "Microfon" -> {
-                for (Microfon mic : microfoane) {
-                    if (mic.getCompatibilitateSO().contains(criteriu) && mic.isConferinta() == conditie) {
-                        textAreaRezultate.append(mic.obtineDetalii() + "\n");
-                    }
-                }
-            }
-        }
+        camere = new ArrayList<>();
+        camere.add(new CameraVideo("Logitech", "C920", 399.99, "Windows, MacOS", 1080, 30, true));
+        camere.add(new CameraVideo("Razer", "Kiyo", 599.99, "Windows", 1080, 60, true));
+        camere.add(new CameraVideo("Microsoft", "LifeCam Studio", 249.99, "Windows", 1080, 30, true));
+        camere.add(new CameraVideo("Dell", "UltraSharp", 699.99, "Windows, MacOS", 2160, 30, true));
+        camere.add(new CameraVideo("HP", "Pro Webcam", 349.99, "Windows", 720, 30, false));
+        camere.add(new CameraVideo("Logitech", "Brio 4K", 999.99, "Windows, MacOS", 2160, 60, true));
+        camere.add(new CameraVideo("AverMedia", "PW315", 799.99, "Windows", 1080, 60, true));
+        camere.add(new CameraVideo("Lenovo", "500 FHD", 299.99, "Windows", 1080, 30, false));
+        camere.add(new CameraVideo("Creative", "Live! Cam", 249.99, "Windows", 720, 30, true));
+        camere.add(new CameraVideo("Trust", "Spotlight Pro", 149.99, "Windows", 720, 30, false));
     }
 
     /**
@@ -171,26 +75,246 @@ public class GUIPeriferice extends JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tastatura", "Mouse", "Microfon", "Camera Video" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Introduceti sistemul de operare (ex: Windows, Linxu, MacOS):");
+
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Selecteaza perifericul");
+
+        jCheckBox1.setText("Doresti sa fie sub 300 RON ?");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Filtreaza");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jButton2.setText("Scrie in fisier");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Citeste din fisier");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(75, 75, 75)
+                        .addComponent(jButton3))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 744, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
+                    .addComponent(jCheckBox1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(115, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jCheckBox1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton1)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3))
+                .addGap(34, 34, 34))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+
+        String tipPeriferic = jComboBox1.getSelectedItem().toString();
+        switch (tipPeriferic) {
+            case "Tastatura" ->
+                System.out.println("Ati selectat: Tastatura");
+            case "Mouse" ->
+                System.out.println("Ati selectat: Mouse");
+            case "Microfon" ->
+                System.out.println("Ati selectat: Microfon");
+            case "Camera Video" ->
+                System.out.println("Ati selectat: Camera Video");
+
+        }
+    }//GEN-LAST:event_jComboBox1ActionPerformed
+    //TEXT CRITERIU
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+
+        String sistemOperare = jTextField1.getText();
+
+        if (sistemOperare.isEmpty()) {
+            System.out.println("Nu ati introdus un sistem de operare!");
+            return;
+        }
+        System.out.println("Sistemul de operare introdus: " + sistemOperare);
+    }//GEN-LAST:event_jTextField1ActionPerformed
+    //CHECKBOX PRET SUB 300
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        boolean pretSub300 = jCheckBox1.isSelected();
+
+        if (pretSub300) {
+            System.out.println("A fost selectata optiunea pentru pret sub 300.");
+        } else {
+            System.out.println("A fost deselectata optiunea pentru pret sub 300.");
+        }
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+        String selectieTip = (String) jComboBox1.getSelectedItem();
+        String sistemOperare = jTextField1.getText().trim();
+        boolean pretSub300 = jCheckBox1.isSelected();
+
+        jTextArea1.setText("");
+
+        if (null != selectieTip) {
+            switch (selectieTip) {
+                case "Tastatura" -> {
+                    for (Tastatura tastatura : tastaturi) {
+                        if (tastatura.getCompatibilitateSO().contains(sistemOperare)
+                                && (!pretSub300 || tastatura.getPret() < 300)) {
+                            jTextArea1.append(tastatura.obtineDetalii() + "\n");
+                        }
+                    }
+                }
+                case "Mouse" -> {
+                    for (Mouse mouse : mouseuri) {
+                        if (mouse.getCompatibilitateSO().contains(sistemOperare)
+                                && (!pretSub300 || mouse.getPret() < 300)) {
+                            jTextArea1.append(mouse.obtineDetalii() + "\n");
+                        }
+                    }
+                }
+                case "Microfon" -> {
+                    for (Microfon microfon : microfoane) {
+                        if (microfon.getCompatibilitateSO().contains(sistemOperare)
+                                && (!pretSub300 || microfon.getPret() < 300)) {
+                            jTextArea1.append(microfon.obtineDetalii() + "\n");
+                        }
+                    }
+                }
+                case "Camera Video" -> {
+                    for (CameraVideo camera : camere) {
+                        if (camera.getCompatibilitateSO().contains(sistemOperare)
+                                && (!pretSub300 || camera.getPret() < 300)) {
+                            jTextArea1.append(camera.obtineDetalii() + "\n");
+                        }
+                    }
+                }
+                default -> {
+                }
+            }
+        }
+
+        if (jTextArea1.getText().isEmpty()) {
+            jTextArea1.setText("Nu există produse care să îndeplinească criteriile!");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        String text = jTextArea1.getText();
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("instante.txt"))) {
+            writer.write(text);
+            writer.newLine();
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "A apărut o eroare la salvarea fișierului: ");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("instante.txt"))) {
+            String line;
+            StringBuilder content = new StringBuilder();
+
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+            jTextArea1.setText(content.toString());
+
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Eroare la citirea fișierului: " + e.getMessage());
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -210,12 +334,22 @@ public class GUIPeriferice extends JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        SwingUtilities.invokeLater(() -> {
-            GUIPeriferice gui = new GUIPeriferice();
-            gui.setVisible(true);
+        java.awt.EventQueue.invokeLater(() -> {
+            new GUIPeriferice().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
 }
